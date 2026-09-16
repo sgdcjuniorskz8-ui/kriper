@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CREEPER HUB — Энциклопедия Крипера | Minecraft</title>
+  <meta name="description" content="Полная энциклопедия Крипера из Minecraft: история, анатомия, статистика урона, виды, таблицы лута и музыкальных пластинок. Самый крутой сайт о Крипере." />
+  <meta name="keywords" content="крипер, minecraft, creeper, взрыв, заряженный крипер, музыкальные пластинки, лут" />
+  <meta property="og:title" content="CREEPER HUB — Энциклопедия Крипера" />
+  <meta property="og:description" content="Самый подробный сайт о Крипере из Minecraft" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+<!-- ─── Particle Canvas ─── -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- ─── Explosion Flash Overlay ─── -->
+<div class="explosion-flash" id="explosion-flash"></div>
+
+<!-- ─── Lightbox ─── -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр изображения">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть">✕</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="Lightbox image" />
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<!-- ─── Navigation ─── -->
+<nav class="nav" role="navigation" aria-label="Главная навигация">
+  <a href="#hero" class="nav-logo" aria-label="Creeper Hub - Главная">
+    <svg class="nav-logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="2" width="24" height="22" rx="2" fill="#4a7a44"/>
+      <rect x="8" y="4" width="20" height="18" fill="#5a8a54"/>
+      <rect x="10" y="8" width="5" height="5" fill="#1a2a18"/>
+      <rect x="21" y="8" width="5" height="5" fill="#1a2a18"/>
+      <rect x="12" y="16" width="3" height="3" fill="#1a2a18"/>
+      <rect x="15" y="14" width="6" height="3" fill="#1a2a18"/>
+      <rect x="21" y="16" width="3" height="3" fill="#1a2a18"/>
+      <rect x="10" y="24" width="5" height="10" fill="#4a7a44"/>
+      <rect x="21" y="24" width="5" height="10" fill="#4a7a44"/>
+      <rect width="36" height="36" fill="none"/>
+    </svg>
+    <span class="nav-logo-text">CREEPER HUB</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#gallery">Галерея</a></li>
+    <li><a href="#tables">Таблицы</a></li>
+    <li><a href="#calculator">Калькулятор</a></li>
+    <li><a href="#anatomy">Анатомия</a></li>
+    <li><a href="#fuse">Взрыв</a></li>
+    <li><a href="#facts">Факты</a></li>
+    <li><a href="#skin">Скин</a></li>
+  </ul>
+
+  <div class="charged-toggle" id="charged-toggle" role="button" tabindex="0" aria-label="Переключить режим заряженного крипера">
+    <div class="toggle-switch"></div>
+    <span class="toggle-label">☢ NORMAL</span>
+  </div>
+</nav>
+
+<!-- ─── SITE WRAPPER ─── -->
+<div class="site-wrapper">
+
+  <!-- ══════════════════════════════════════════
+       HERO SECTION
+  ══════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-img"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">☢ CLASSIFIED DATA — ВРАГ #1 В MINECRAFT ☢</div>
+      <h1 class="hero-title">
+        <span class="line-1">ДОБРО ПОЖАЛОВАТЬ В</span>
+        <span class="line-2" data-text="CREEPER HUB">CREEPER HUB</span>
+      </h1>
+      <p class="hero-desc">
+        Полная энциклопедия самого опасного, молчаливого и взрывоопасного существа из Minecraft.
+        Данные засекречены. Брифинг начинается.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat fade-in-up stagger-1">
+          <span class="hero-stat-value">127❤</span>
+          <span class="hero-stat-label">Макс. урон</span>
+        </div>
+        <div class="hero-stat fade-in-up stagger-2">
+          <span class="hero-stat-value">4.0м</span>
+          <span class="hero-stat-label">Радиус взрыва</span>
+        </div>
+        <div class="hero-stat fade-in-up stagger-3">
+          <span class="hero-stat-value">1.5с</span>
+          <span class="hero-stat-label">Время детонации</span>
+        </div>
+        <div class="hero-stat fade-in-up stagger-4">
+          <span class="hero-stat-value">13🎵</span>
+          <span class="hero-stat-label">Музыкальных пластинок</span>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#tables" class="btn btn-primary" id="hero-explore-btn">📊 Смотреть таблицы</a>
+        <a href="#fuse" class="btn btn-outline" id="hero-fuse-btn">💣 Запустить взрыв</a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       GALLERY
+  ══════════════════════════════════════════ -->
+  <div class="section-divider"></div>
+
+  <section class="section" id="gallery">
+    <div class="section-header fade-in-up">
+      <div class="section-eyebrow">📸 3D RENDERS</div>
+      <h2 class="section-title">Галерея <span>Криперов</span></h2>
+      <p class="section-desc">Гиперреалистичные 3D-рендеры самого опасного существа в истории Minecraft</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item fade-in-up stagger-1"
+           data-src="assets/images/creeper_hero.png"
+           data-caption="CREEPER — НОЧНОЙ СТРАЖ ЛЕСА">
+        <img src="assets/images/creeper_hero.png" alt="Крипер в неоновом лесу ночью" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h3>НОЧНОЙ СТРАЖ</h3>
+            <p>Крипер в тёмном неоновом лесу</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in-up stagger-2"
+           data-src="assets/images/charged_creeper.png"
+           data-caption="CHARGED CREEPER — ЭЛЕКТРИЧЕСКАЯ СМЕРТЬ">
+        <img src="assets/images/charged_creeper.png" alt="Заряженный крипер с молнией" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h3>ЗАРЯЖЕННЫЙ КРИПЕР</h3>
+            <p>Усиленный удар молнии</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in-up stagger-3"
+           data-src="assets/images/creeper_anatomy.png"
+           data-caption="АНАТОМИЧЕСКАЯ СХЕМА КРИПЕРА — ЗАСЕКРЕЧЕНО">
+        <img src="assets/images/creeper_anatomy.png" alt="Голографическая анатомия крипера" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h3>ГОЛОГРАММА</h3>
+            <p>Внутренняя схема строения</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in-up stagger-4"
+           data-src="assets/images/creeper_army.png"
+           data-caption="АРМИЯ КРИПЕРОВ — НОЧНАЯ УГРОЗА">
+        <img src="assets/images/creeper_army.png" alt="Армия криперов в ночном лесу" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h3>АРМИЯ КРИПЕРОВ</h3>
+            <p>Пять стражей тёмного леса</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in-up stagger-5"
+           data-src="assets/images/creeper_close.png"
+           data-caption="КРИПЕР — ПОРТРЕТ СМЕРТИ (КРУПНЫЙ ПЛАН)">
+        <img src="assets/images/creeper_close.png" alt="Морда крипера крупным планом" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h3>ПОРТРЕТ СМЕРТИ</h3>
+            <p>Крупный план — взгляд в глаза</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-item fade-in-up stagger-1"
+           data-src="assets/images/creeper_explosion.png"
+           data-caption="МОМЕНТ ВЗРЫВА — ПОСЛЕДНЕЕ ЧТО ВЫ УВИДИТЕ">
+        <img src="assets/images/creeper_explosion.png" alt="Взрыв крипера в пещере" loading="lazy" />
+        <div class="gallery-overlay">
+          <div class="gallery-info">
+            <h3>МОМЕНТ ВЗРЫВА</h3>
+            <p>Последнее, что вы увидите</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       TABLES SECTION
+  ══════════════════════════════════════════ -->
+  <div class="section-divider"></div>
+
+  <section class="section" id="tables">
+    <div class="section-header fade-in-up">
+      <div class="section-eyebrow">📊 БАЗА ДАННЫХ</div>
+      <h2 class="section-title">Таблицы &amp; <span>Статистика</span></h2>
+      <p class="section-desc">Полная база данных о Крипере: лут, пластинки, взрывоустойчивость блоков</p>
+    </div>
+
+    <!-- TABLE 1: Drop Table -->
+    <div class="table-card fade-in-up">
+      <div class="table-card-header">
+        <span class="table-card-title">☣ ТАБЛИЦА ДРОПА КРИПЕРА</span>
+        <span class="table-card-badge">Стандартный / Добыча I–III</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Предмет</th>
+              <th>Без зачарования</th>
+              <th>Добыча I</th>
+              <th>Добыча II</th>
+              <th>Добыча III</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>💣 Порох (Gunpowder)</td>
+              <td>0–2 шт.</td>
+              <td>0–3 шт.</td>
+              <td>0–4 шт.</td>
+              <td>0–5 шт.</td>
+              <td><span class="tag tag-green">Всегда</span></td>
+            </tr>
+            <tr>
+              <td>🪖 Голова Крипера</td>
+              <td>0 шт.</td>
+              <td>0 шт.</td>
+              <td>0 шт.</td>
+              <td>0 шт.</td>
+              <td><span class="tag tag-blue">Только Charged</span></td>
+            </tr>
+            <tr>
+              <td>🎵 Музыкальная пластинка</td>
+              <td>—</td>
+              <td>—</td>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="tag tag-purple">Убийство скелетом</span></td>
+            </tr>
+            <tr>
+              <td>⚡ Опыт (XP)</td>
+              <td>5 опыта</td>
+              <td>5 опыта</td>
+              <td>5 опыта</td>
+              <td>5 опыта</td>
+              <td><span class="tag tag-yellow">Гарантирован</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLE 2: Music Discs -->
+    <div class="table-card fade-in-up">
+      <div class="table-card-header">
+        <span class="table-card-title">🎵 МУЗЫКАЛЬНЫЕ ПЛАСТИНКИ — ПОЛНЫЙ СПИСОК</span>
+        <span class="table-card-badge">13 уникальных треков</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Пластинка</th>
+              <th>Автор</th>
+              <th>Длительность</th>
+              <th>Цвет</th>
+              <th>Как получить</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🎵 13</td>
+              <td>C418</td>
+              <td>2:58</td>
+              <td><span style="color:#8a8a8a"><span class="disc-dot" style="background:#8a8a8a;color:#8a8a8a"></span>Серый</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 cat</td>
+              <td>C418</td>
+              <td>3:05</td>
+              <td><span style="color:#ffcc44"><span class="disc-dot" style="background:#ffcc44"></span>Жёлтый</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 blocks</td>
+              <td>C418</td>
+              <td>5:45</td>
+              <td><span style="color:#ff4444"><span class="disc-dot" style="background:#ff4444"></span>Красный</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 chirp</td>
+              <td>C418</td>
+              <td>3:05</td>
+              <td><span style="color:#ff8844"><span class="disc-dot" style="background:#ff8844"></span>Оранжевый</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 far</td>
+              <td>C418</td>
+              <td>2:54</td>
+              <td><span style="color:#44cc44"><span class="disc-dot" style="background:#44cc44"></span>Зелёный</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 mall</td>
+              <td>C418</td>
+              <td>3:17</td>
+              <td><span style="color:#44aaff"><span class="disc-dot" style="background:#44aaff"></span>Синий</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 mellohi</td>
+              <td>C418</td>
+              <td>1:36</td>
+              <td><span style="color:#cc66ff"><span class="disc-dot" style="background:#cc66ff"></span>Фиолетовый</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 stal</td>
+              <td>C418</td>
+              <td>2:30</td>
+              <td><span style="color:#666666"><span class="disc-dot" style="background:#666666"></span>Тёмно-серый</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 strad</td>
+              <td>C418</td>
+              <td>3:08</td>
+              <td><span style="color:#ffe566"><span class="disc-dot" style="background:#ffe566"></span>Светло-жёлтый</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 ward</td>
+              <td>C418</td>
+              <td>4:11</td>
+              <td><span style="color:#44ffcc"><span class="disc-dot" style="background:#44ffcc"></span>Циановый</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 11</td>
+              <td>C418</td>
+              <td>1:11</td>
+              <td><span style="color:#ffaa00"><span class="disc-dot" style="background:#ffaa00"></span>Сломанный</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 wait</td>
+              <td>C418</td>
+              <td>3:58</td>
+              <td><span style="color:#ff66aa"><span class="disc-dot" style="background:#ff66aa"></span>Розовый</span></td>
+              <td><span class="tag tag-gray">Крипер убит скелетом</span></td>
+            </tr>
+            <tr>
+              <td>🎵 Pigstep</td>
+              <td>Lena Raine</td>
+              <td>2:28</td>
+              <td><span style="color:#ff6633"><span class="disc-dot" style="background:#ff6633"></span>Огненный</span></td>
+              <td><span class="tag tag-red">Сундук в бастионе</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLE 3: Blast Resistance -->
+    <div class="table-card fade-in-up">
+      <div class="table-card-header">
+        <span class="table-card-title">🧱 ВЗРЫВОУСТОЙЧИВОСТЬ БЛОКОВ</span>
+        <span class="table-card-badge">Blast Resistance — Сравнение</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Блок</th>
+              <th>Blast Resistance</th>
+              <th>Устойчивость</th>
+              <th>Выживет взрыв Крипера?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>🟣 Обсидиан</td>
+              <td>1200</td>
+              <td>
+                <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+              </td>
+              <td><span class="tag tag-green">✅ Всегда выживет</span></td>
+            </tr>
+            <tr>
+              <td>🩶 Усиленный камень</td>
+              <td>80</td>
+              <td>
+                <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+              </td>
+              <td><span class="tag tag-green">✅ Выживет</span></td>
+            </tr>
+            <tr>
+              <td>⬛ Булыжник / Камень</td>
+              <td>6</td>
+              <td>
+                <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+              </td>
+              <td><span class="tag tag-yellow">⚠️ Зависит от дистанции</span></td>
+            </tr>
+            <tr>
+              <td>🟫 Дерево (Древесина)</td>
+              <td>2</td>
+              <td>
+                <div class="progress-bar"><div class="progress-fill orange" style="width:20%"></div></div>
+              </td>
+              <td><span class="tag tag-orange">🔶 Вероятно разрушится</span></td>
+            </tr>
+            <tr>
+              <td>🟡 Песок / Гравий</td>
+              <td>0.5</td>
+              <td>
+                <div class="progress-bar"><div class="progress-fill red" style="width:8%"></div></div>
+              </td>
+              <td><span class="tag tag-red">💥 Разрушится</span></td>
+            </tr>
+            <tr>
+              <td>🌊 Вода (жидкость)</td>
+              <td>100</td>
+              <td>
+                <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+              </td>
+              <td><span class="tag tag-blue">🛡 Полностью гасит взрыв</span></td>
+            </tr>
+            <tr>
+              <td>🟩 Трава / Земля</td>
+              <td>0.5</td>
+              <td>
+                <div class="progress-bar"><div class="progress-fill red" style="width:5%"></div></div>
+              </td>
+              <td><span class="tag tag-red">💥 Немедленно разрушится</span></td>
+            </tr>
+            <tr>
+              <td>🔷 Стеклянный блок</td>
+              <td>0.3</td>
+              <td>
+                <div class="progress-bar"><div class="progress-fill red" style="width:3%"></div></div>
+              </td>
+              <td><span class="tag tag-red">💥 Мгновенно разрушится</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLE 4: Variants -->
+    <div class="table-card fade-in-up">
+      <div class="table-card-header">
+        <span class="table-card-title">⚡ ВАРИАНТЫ КРИПЕРА</span>
+        <span class="table-card-badge">Сравнение типов</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Тип</th>
+              <th>Здоровье</th>
+              <th>Макс. урон</th>
+              <th>Радиус взрыва</th>
+              <th>Дроп голов</th>
+              <th>Особенность</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>☢ Обычный крипер</td>
+              <td>20 HP (10❤)</td>
+              <td>49 (Normal)</td>
+              <td>4.0 блока</td>
+              <td><span class="tag tag-red">❌ Нет</span></td>
+              <td>Боится кошек, оцелотов</td>
+            </tr>
+            <tr>
+              <td>⚡ Заряженный крипер</td>
+              <td>20 HP (10❤)</td>
+              <td>127 (Charged)</td>
+              <td>5.5 блока</td>
+              <td><span class="tag tag-green">✅ Всегда</span></td>
+              <td>Создаётся ударом молнии</td>
+            </tr>
+            <tr>
+              <td>🔵 Снежный крипер</td>
+              <td>Мод</td>
+              <td>Мод</td>
+              <td>Мод</td>
+              <td><span class="tag tag-gray">Мод</span></td>
+              <td>Только в модах</td>
+            </tr>
+            <tr>
+              <td>🔴 Сверхзаряженный</td>
+              <td>Комманда</td>
+              <td>Команда</td>
+              <td>Команда</td>
+              <td><span class="tag tag-green">✅</span></td>
+              <td>/summon с NBT данными</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TABLE 5: NBT Commands -->
+    <div class="table-card fade-in-up">
+      <div class="table-card-header">
+        <span class="table-card-title">⌨️ КОМАНДЫ КРИПЕРА — ЧИТЫ И NBT</span>
+        <span class="table-card-badge">Java & Bedrock Edition</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Команда</th>
+              <th>Эффект</th>
+              <th>Edition</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code style="color:var(--neon-green);font-family:monospace;font-size:0.75rem">/summon creeper ~ ~ ~ {powered:1b}</code></td>
+              <td>Заряженный крипер</td>
+              <td><span class="tag tag-blue">Java</span></td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--neon-green);font-family:monospace;font-size:0.75rem">/summon creeper ~ ~ ~ {ExplosionRadius:50b}</code></td>
+              <td>Гигантский взрыв (R=50)</td>
+              <td><span class="tag tag-blue">Java</span></td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--neon-green);font-family:monospace;font-size:0.75rem">/summon creeper ~ ~ ~ {Fuse:0s}</code></td>
+              <td>Мгновенный взрыв</td>
+              <td><span class="tag tag-blue">Java</span></td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--neon-green);font-family:monospace;font-size:0.75rem">/summon creeper ~ ~ ~ {NoAI:1b}</code></td>
+              <td>Неподвижный крипер</td>
+              <td><span class="tag tag-blue">Java</span></td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--neon-green);font-family:monospace;font-size:0.75rem">/give @p creeper_head</code></td>
+              <td>Голова крипера в инвентарь</td>
+              <td><span class="tag tag-orange">Java + Bedrock</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       DAMAGE CALCULATOR
+  ══════════════════════════════════════════ -->
+  <div class="section-divider"></div>
+
+  <section class="section" id="calculator">
+    <div class="section-header fade-in-up">
+      <div class="section-eyebrow">🧮 КАЛЬКУЛЯТОР</div>
+      <h2 class="section-title">Калькулятор <span>Урона</span></h2>
+      <p class="section-desc">Рассчитайте урон от взрыва с учётом сложности игры, расстояния, брони и зачарований</p>
+    </div>
+
+    <div class="calc-card fade-in-up">
+      <div class="calc-grid">
+        <!-- Controls -->
+        <div>
+          <div style="margin-bottom:1.5rem">
+            <label class="calc-label" for="calc-diff">Сложность игры</label>
+            <select class="form-select" id="calc-diff">
+              <option value="easy">🟢 Easy — Лёгкая</option>
+              <option value="normal" selected>🟡 Normal — Нормальная</option>
+              <option value="hard">🔴 Hard — Тяжёлая</option>
+              <option value="charged">⚡ Заряженный крипер</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:1.5rem">
+            <label class="calc-label" for="calc-dist">
+              Расстояние от взрыва: <span class="calc-range-val" id="calc-dist-val">2.0m</span>
+            </label>
+            <input type="range" class="form-range" id="calc-dist" min="0" max="8" step="0.1" value="2" />
+          </div>
+
+          <div style="margin-bottom:1.5rem">
+            <label class="calc-label" for="calc-bp">Уровень Blast Protection</label>
+            <select class="form-select" id="calc-bp">
+              <option value="0">Нет зачарования</option>
+              <option value="1">Blast Protection I</option>
+              <option value="2">Blast Protection II</option>
+              <option value="3">Blast Protection III</option>
+              <option value="4">Blast Protection IV</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:1rem">
+            <label class="calc-label" for="calc-armor">
+              Снижение урона от брони: <span class="calc-range-val" id="calc-armor-val">0%</span>
+            </label>
+            <input type="range" class="form-range" id="calc-armor" min="0" max="80" step="5" value="0"
+                   oninput="document.getElementById('calc-armor-val').textContent=this.value+'%'" />
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="calc-result">
+          <div class="calc-result-title">ИТОГОВЫЙ УРОН</div>
+          <div class="calc-damage" id="calc-result-number">49</div>
+          <div class="calc-damage-label">единиц урона</div>
+
+          <div class="damage-bars">
+            <div class="damage-bar-row">
+              <div class="damage-bar-label">
+                <span>Базовый урон</span>
+                <span id="bar-raw-val">—</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill orange" id="bar-raw" style="width:0"></div></div>
+            </div>
+            <div class="damage-bar-row">
+              <div class="damage-bar-label">
+                <span>После Blast Protection</span>
+                <span id="bar-bp-val">—</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill orange" id="bar-bp" style="width:0"></div></div>
+            </div>
+            <div class="damage-bar-row">
+              <div class="damage-bar-label">
+                <span>Итого (с бронёй)</span>
+                <span id="bar-final-val">—</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill red" id="bar-final" style="width:0"></div></div>
+            </div>
+          </div>
+
+          <div style="margin-top:1.5rem;padding:0.75rem;background:rgba(0,0,0,0.3);border-radius:var(--radius-sm);font-size:0.85rem;color:var(--text-secondary)">
+            <span id="survival-text">⚠️ Критическая зона</span>
+          </div>
+
+          <button class="btn btn-outline" onclick="playCatBtn()" id="cat-btn" style="margin-top:1.5rem;width:100%">
+            🐱 Испугать крипера котом
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ANATOMY SECTION
+  ══════════════════════════════════════════ -->
+  <div class="section-divider"></div>
+
+  <section class="section" id="anatomy">
+    <div class="section-header fade-in-up">
+      <div class="section-eyebrow">🔬 АНАТОМИЯ</div>
+      <h2 class="section-title">Внутреннее <span>Строение</span></h2>
+      <p class="section-desc">Нажмите на точки-маркеры, чтобы узнать о каждой части тела крипера</p>
+    </div>
+
+    <div class="anatomy-wrap fade-in-up">
+      <div class="anatomy-img-wrap">
+        <img src="assets/images/creeper_anatomy.png" alt="Анатомическая схема крипера" />
+
+        <!-- Hotspots -->
+        <div class="anatomy-hotspot" data-target="point-1"
+             style="top:18%;left:48%" title="ТНТ-ядро"></div>
+        <div class="anatomy-hotspot" data-target="point-2"
+             style="top:35%;left:25%" title="Маскировочная кожа"></div>
+        <div class="anatomy-hotspot" data-target="point-3"
+             style="top:70%;left:35%" title="Система движения"></div>
+        <div class="anatomy-hotspot" data-target="point-4"
+             style="top:28%;left:72%" title="Нейронный центр"></div>
+      </div>
+
+      <div class="anatomy-points">
+        <div class="anatomy-point active" id="point-1">
+          <div class="anatomy-point-num">01</div>
+          <div>
+            <div class="anatomy-point-title">💥 ТНТ-ядро и Пороховой резервуар</div>
+            <div class="anatomy-point-desc">
+              Внутри каждого крипера находится компрессованный пороховой резервуар высокой плотности,
+              окружённый органической ТНТ-матрицей. При активации детонационный цикл занимает 1.5 секунды,
+              генерируя взрывную волну мощностью ~65 TNT-единиц.
+            </div>
+          </div>
+        </div>
+
+        <div class="anatomy-point" id="point-2">
+          <div class="anatomy-point-num">02</div>
+          <div>
+            <div class="anatomy-point-title">🟢 Маскировочная кожа</div>
+            <div class="anatomy-point-desc">
+              Зелёная пиксельная кожа крипера — результат эволюционной мимикрии под блоки листьев и травы.
+              Согласно теории, крипер изначально был задуман как свинья, но ошибка в коде перевернула модель.
+              Именно так появился культовый «кожный» паттерн.
+            </div>
+          </div>
+        </div>
+
+        <div class="anatomy-point" id="point-3">
+          <div class="anatomy-point-num">03</div>
+          <div>
+            <div class="anatomy-point-title">🦵 Четырёхлапая система движения</div>
+            <div class="anatomy-point-desc">
+              Четыре коротких ноги обеспечивают бесшумное скольжение по поверхности.
+              Крипер не издаёт звуков при ходьбе, что делает его одним из самых опасных врагов.
+              Скорость: 3 блока/секунду (обычный), 4.8 блока/секунду (заряженный).
+            </div>
+          </div>
+        </div>
+
+        <div class="anatomy-point" id="point-4">
+          <div class="anatomy-point-num">04</div>
+          <div>
+            <div class="anatomy-point-title">🧠 Нейронный центр (Фобия кошек)</div>
+            <div class="anatomy-point-desc">
+              Мозговой центр крипера содержит жёстко закодированную фобию кошек и оцелотов.
+              При обнаружении кошки в радиусе 6 блоков нейронный центр запускает протокол паники —
+              крипер отбегает и не может активировать детонатор.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FUSE SIMULATOR
+  ══════════════════════════════════════════ -->
+  <div class="section-divider"></div>
+
+  <section class="fuse-section" id="fuse">
+    <div class="fuse-inner fade-in-up">
+      <div class="section-eyebrow" style="display:inline-block;margin-bottom:1.5rem">💣 СИМУЛЯТОР ВЗРЫВА</div>
+      <h2 class="section-title" style="font-size:clamp(1rem,3vw,1.8rem);margin-bottom:1rem">
+        Нажмите <span>поджечь</span> крипера
+      </h2>
+      <p style="color:var(--text-secondary);margin-bottom:0.5rem;font-size:0.9rem">
+        ⚠️ Внимание: возможны визуальные эффекты и звук взрыва
+      </p>
+
+      <div class="countdown-display" id="countdown-display">—</div>
+      <div class="fuse-status" id="fuse-status">Ожидание активации...</div>
+
+      <div class="fuse-btn-wrap" style="margin-top:1.5rem">
+        <button class="btn btn-danger" id="fuse-btn">☢ ПОДЖЕЧЬ КРИПЕРА</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FACTS SECTION
+  ══════════════════════════════════════════ -->
+  <div class="section-divider"></div>
+
+  <section class="section" id="facts">
+    <div class="section-header fade-in-up">
+      <div class="section-eyebrow">💡 ИНТЕРЕСНЫЕ ФАКТЫ</div>
+      <h2 class="section-title">Факты о <span>Крипере</span></h2>
+      <p class="section-desc">Всё что вы не знали о самом известном мобе в Minecraft</p>
+    </div>
+
+    <div class="facts-grid">
+      <div class="fact-card fade-in-up stagger-1">
+        <span class="fact-icon">🐷</span>
+        <div class="fact-title">СЛУЧАЙНАЯ ОШИБКА</div>
+        <p class="fact-text">
+          Крипер был создан случайно. Нотч перепутал ширину и высоту при создании модели свиньи.
+          Когда он повернул растянутую модель вертикально — получился крипер. Баг стал иконой.
+        </p>
+      </div>
+
+      <div class="fact-card fade-in-up stagger-2">
+        <span class="fact-icon">🐱</span>
+        <div class="fact-title">ФОБИЯ КОШЕК</div>
+        <p class="fact-text">
+          Крипер боится кошек и оцелотов на расстоянии до 6 блоков. При виде кошки он убегает
+          и не может активировать взрыв. Это единственный природный способ остановить детонацию.
+        </p>
+      </div>
+
+      <div class="fact-card fade-in-up stagger-3">
+        <span class="fact-icon">⚡</span>
+        <div class="fact-title">ЗАРЯЖЕННЫЙ КРИПЕР</div>
+        <p class="fact-text">
+          Если в крипера попадает молния, он становится заряженным. Сила взрыва удваивается,
+          а при убийстве других мобов рядом — выпадают их головы. Крайне редкое событие.
+        </p>
+      </div>
+
+      <div class="fact-card fade-in-up stagger-4">
+        <span class="fact-icon">🎵</span>
+        <div class="fact-title">ХРАНИТЕЛЬ ПЛАСТИНОК</div>
+        <p class="fact-text">
+          Единственный способ получить большинство из 13 музыкальных пластинок — это чтобы скелет
+          убил крипера. Поэтому крипер стал невольным хранителем музыки в мире Minecraft.
+        </p>
+      </div>
+
+      <div class="fact-card fade-in-up stagger-5">
+        <span class="fact-icon">🔇</span>
+        <div class="fact-title">АБСОЛЮТНАЯ ТИШИНА</div>
+        <p class="fact-text">
+          Крипер — единственный враг в Minecraft, который не издаёт звуков при движении.
+          Шипение «Тсс...» слышно только при активации взрывателя. Именно поэтому он так опасен
+          сзади.
+        </p>
+      </div>
+
+      <div class="fact-card fade-in-up stagger-1">
+        <span class="fact-icon">💀</span>
+        <div class="fact-title">СИМВОЛ MINECRAFT</div>
+        <p class="fact-text">
+          Голова крипера стала неофициальным логотипом всего Minecraft-сообщества.
+          Она изображена на майках, кружках, плакатах и является самым узнаваемым символом игры
+          наравне с пикселем земли.
+        </p>
+      </div>
+
+      <div class="fact-card fade-in-up stagger-2">
+        <span class="fact-icon">🛡</span>
+        <div class="fact-title">ЛУЧШАЯ ЗАЩИТА</div>
+        <p class="fact-text">
+          Броня с Blast Protection IV на каждом слоте уменьшает урон от взрыва на 64%.
+          В сочетании с расстоянием 4+ блоков — можно пережить даже заряженный взрыв на Hard.
+        </p>
+      </div>
+
+      <div class="fact-card fade-in-up stagger-3">
+        <span class="fact-icon">🌊</span>
+        <div class="fact-title">ВОДЯНОЙ БАРЬЕР</div>
+        <p class="fact-text">
+          Вода полностью поглощает взрывную волну крипера. Если взрыв происходит под водой —
+          блоки не разрушаются. Это самая эффективная защита от разрушения строений.
+        </p>
+      </div>
+
+      <div class="fact-card fade-in-up stagger-4">
+        <span class="fact-icon">📐</span>
+        <div class="fact-title">МАТЕМАТИКА ВЗРЫВА</div>
+        <p class="fact-text">
+          Сила взрыва обычного крипера = 3.0, заряженного = 6.0. Для сравнения: динамит = 4.0,
+          кастрюля с зельем ведьмы = 3.0. Заряженный крипер в 2 раза мощнее динамита.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SKIN BUILDER
+  ══════════════════════════════════════════ -->
+  <div class="section-divider"></div>
+
+  <section class="section" id="skin">
+    <div class="section-header fade-in-up">
+      <div class="section-eyebrow">🎨 ПИКСЕЛЬ-АРТ</div>
+      <h2 class="section-title">Конструктор <span>Скина</span></h2>
+      <p class="section-desc">Нарисуй свою версию морды крипера в пиксельном стиле и скачай результат</p>
+    </div>
+
+    <div class="skin-builder-wrap fade-in-up">
+      <div>
+        <canvas id="creeper-canvas"
+                style="width:240px;height:360px;display:block;"
+                title="Нарисуй своего крипера"></canvas>
+      </div>
+
+      <div class="skin-controls">
+        <div>
+          <label class="calc-label">Палитра цветов</label>
+          <div class="color-palette" id="skin-palette"></div>
+        </div>
+
+        <div>
+          <label class="calc-label">Инструкция</label>
+          <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7">
+            Выберите цвет из палитры и рисуйте кликом мыши прямо на канвасе.
+            Перетаскивание мыши тоже работает. Нарисуй своего уникального крипера!
+          </p>
+        </div>
+
+        <div class="skin-action-btns">
+          <button class="btn btn-primary" id="skin-download">⬇️ Скачать PNG</button>
+          <button class="btn btn-outline" id="skin-reset">🔄 Сбросить</button>
+        </div>
+
+        <div style="background:var(--bg-glass);border:1px solid var(--border-neon);border-radius:var(--radius-md);padding:1rem">
+          <div class="calc-label" style="margin-bottom:0.5rem">💡 Подсказка</div>
+          <p style="font-size:0.8rem;color:var(--text-secondary);line-height:1.6">
+            Базовая сетка 8×12 пикселей — это официальный размер морды крипера.
+            Первый и последний ряды / столбцы — фон.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <div class="section-divider"></div>
+
+  <footer>
+    <span class="footer-logo">☢ CREEPER HUB ☢</span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="#hero">Главная</a>
+      <a href="#gallery">Галерея</a>
+      <a href="#tables">Таблицы</a>
+      <a href="#calculator">Калькулятор</a>
+      <a href="#anatomy">Анатомия</a>
+      <a href="#fuse">Взрыв</a>
+      <a href="#facts">Факты</a>
+      <a href="#skin">Скин</a>
+    </nav>
+    <p class="footer-copy">
+      © 2024 Creeper Hub | Minecraft — торговая марка Mojang Studios / Microsoft |
+      Сайт создан в образовательных целях
+    </p>
+  </footer>
+
+</div><!-- .site-wrapper -->
+
+<!-- Scripts -->
+<script src="js/particles.js"></script>
+<script type="module" src="js/app.js"></script>
+
+<script>
+// Inline fallback for cat button (in case module loading is restricted)
+function playCatBtn() {
+  // handled by app.js module
+}
+</script>
+
+</body>
+</html>
